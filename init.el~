@@ -1,0 +1,118 @@
+
+(require 'package)
+(package-initialize)
+;;(setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+;;			  ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+			  ("melpa" . "https://melpa.org/packages/")))
+			  ;;("melpa-stable" . "https://stable.melpa.org/packages/")))
+
+;; cl - Common Lisp Extension
+(require 'cl)
+
+;;Add Packages
+(defvar my/packages '(
+		      ;; --- Auto-completion ---
+		      ;company
+		      ;; --- Better Editor ---
+		      ;hungry-delete
+		      ivy
+		      swiper
+		      counsel
+		      smartparens
+		      ace-jump-mode
+		      use-package
+		      ;;auto-save
+		      ;; --- Major Mode ---
+		      ;web-mode
+		      ;;evil
+		      ;;evil-leader
+		      ;;evil-surround
+		      window-numbering
+		      ;;evil-nerd-commenter
+		      ;;evil-escape
+		      neotree
+		      js2-mode
+		      rjsx-mode
+		      ;magit
+		      ;evil-magit
+		      ;; --- Minor Mode ---
+		      window-numbering
+		      ;; --- Themes ---
+
+		      ) "Default packages")
+
+(setq package-selected-packages my/packages)
+
+(defun my/packages-installed-p ()
+    (loop for pkg in my/packages
+	  when (not (package-installed-p pkg)) do (return nil)
+	  finally (return t)))
+
+(unless (my/packages-installed-p)
+  (message "%s" "Refreshing package database...")
+  (package-refresh-contents)
+  (dolist (pkg my/packages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg))))
+
+;; Find Executable Path on OS X
+(when (memq windows-system '(mac ns))
+   (exec-path-from-shell-initialize))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;(require 'init-emacs)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-linum-mode 1)
+(global-hl-line-mode 1)
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+;;可以禁止自动生成备份文件
+(setq make-backup-files nil)
+;;关闭自己生产的保存文件
+(setq auto-save-default nil)
+;;自动加载外部修改过的文件。
+(global-auto-revert-mode 1)
+;;设置为开启默认全屏
+(setq initial-frame-alist (quote ((fullscreen . maximized))))
+;;关闭 Emacs 中的警告音
+(setq ring-bell-function 'ignore)
+;; 更改光标的样式（不能生效，解决方案见第二集）
+(setq cursor-type 'bar)
+;; 关闭启动帮助画面
+(setq inhibit-splash-screen 1)
+;; 更改显示字体大小 16pt
+(set-face-attribute 'default nil :height 160)
+;; 快速打开配置文件
+(defun open-init-file()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
+(global-set-key (kbd "<f2>") 'open-init-file)
+;;加入最近打开过文件的选项让我们更快捷的在图形界面的菜单中打开最近 编辑过的文件。
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-item 10)
+;; 这个快捷键绑定可以用之后的插件 counsel 代替
+;;(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+(require 'init-abbrev-mode)
+;;(require 'init-evil-nerd-commenter-mode)
+(require 'init-neotree)
+(require 'init-functions)
+(require 'init-org-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (swiper counsel smartparens window-numbering neotree window-numbering))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

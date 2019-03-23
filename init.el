@@ -7,45 +7,45 @@
 (require 'cl)
 
 ;;Add Packages
-;; (defvar my/packages '(
-;; 		      ;; --- Auto-completion ---
-;; 		      ;company
-;; 		      ;; --- Better Editor ---
-;; 		      ;hungry-delete
-;; 		      ivy
-;; 		      swiper
-;; 		      counsel
-;; 		      smartparens
-;; 		      ace-jump-mode
-;; 		      use-package
-;; 		      undo-tree
-;; 		      ;;auto-save
-;; 		      ;web-mode
-;; 		      neotree
-;; 		      js2-mode
-;; 		      rjsx-mode
-;; 		      ;;magit
-;;
-;; 		      window-numbering
-;; 		      ;; --- Themes ---
+(defvar my/packages '(
+		      ;; --- Auto-completion ---
+		      ;company
+		      ;; --- Better Editor ---
+		      ;hungry-delete
+		      ivy
+		      swiper
+		      counsel
+		      smartparens
+		      ace-jump-mode
+		      use-package
+		      undo-tree
+		      ;;auto-save
+		      ;web-mode
+		      neotree
+		      js2-mode
+		      rjsx-mode
+		      ;;magit
 
-;; 		      ;; --- Major  ---
-;; 		      markdown-mode
-;; 		      ) "Default packages")
+		      window-numbering
+		      ;; --- Themes ---
 
-;; (setq package-selected-packages my/packages)
+		      ;; --- Major  ---
+		      markdown-mode
+		      ) "Default packages")
 
-;; (defun my/packages-installed-p ()
-;;     (loop for pkg in my/packages
-;; 	  when (not (package-installed-p pkg)) do (return nil)
-;; 	  finally (return t)))
+(setq package-selected-packages my/packages)
 
-;; (unless (my/packages-installed-p)
-;;   (message "%s" "Refreshing package database...")
-;;   (package-refresh-contents)
-;;   (dolist (pkg my/packages)
-;;     (when (not (package-installed-p pkg))
-;;       (package-install pkg))))
+(defun my/packages-installed-p ()
+    (loop for pkg in my/packages
+	  when (not (package-installed-p pkg)) do (return nil)
+	  finally (return t)))
+
+(unless (my/packages-installed-p)
+  (message "%s" "Refreshing package database...")
+  (package-refresh-contents)
+  (dolist (pkg my/packages)
+    (when (not (package-installed-p pkg))
+      (package-install pkg))))
 
 ;; Find Executable Path on OS X
 (when (memq window-system '(mac ns x))
@@ -125,13 +125,21 @@
 
 (use-package projectile
   :ensure t
-  :bind-keymap("\C-c p" . projectile-command-map)
+  :bind-keymap("\C-c pjf" . projectile-command-map)
   :config
   (projectile-mode t)
   (setq project-completion-system 'ivy)
   (use-package counsel-projectile
-    :ensure t)
+    :ensure t
+    :config
+    (counsel-projectile-mode t)
+    )
   )
+
+(defun keymap-projectile-mode ()
+  (define-key key-translation-map (kbd "C-r") (kbd "C-c p j f")))
+  ;(global/local-set-key (kbd "M-g A") 'your-command)
+(add-hook 'projectile-mode-hook 'keymap-projectile-mode)
 
 (global-set-key (kbd "C-h C-j") 'ace-jump-mode)
 (global-set-key (kbd "C-h C-l") 'ace-jump-line-mode)

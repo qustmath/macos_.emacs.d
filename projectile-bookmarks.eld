@@ -1,1 +1,1 @@
-nil
+("~/.emacs.d/" "~/Documents/itogo_admin/" "~/Documents/itogo_server/" "~/Documents/itogo_shop/" "~/Documents/itogo_web/")

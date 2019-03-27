@@ -1,0 +1,24 @@
+
+# Compiled
+*.elc
+
+# Packaging
+.cask
+
+# Backup files
+*~
+
+# Undo-tree save-files
+*.~undo-tree
+
+# .emacs.d/
+.last-package-update-day
+.mc-lists.el
+.org-id-locations
+auto-save-list/
+elpa/
+projectile-bookmarks.eld
+projectile.cache
+recentf
+snippets/
+themes/

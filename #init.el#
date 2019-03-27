@@ -1,5 +1,6 @@
 (require 'package)
-
+;;(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+;;			  ("melpa" . "https://melpa.org/packages/")))
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
@@ -36,10 +37,9 @@
 (line-number-mode t)
 ;;Faces
 (set-face-attribute 'mode-line           nil :background "light blue")
-;;(set-face-attribute 'mode-line-buffer-id nil :background "blue" :foreground "white")
+(set-face-attribute 'mode-line-buffer-id nil :background "blue" :foreground "white")
 (defface mode-line-directory
-  '((t :background "light blue" :foreground "black"))
-;;  '((t :background "blue" :foreground "gray"))  
+  '((t :background "blue" :foreground "gray"))
   "Face used for buffer identification parts of the mode line."
   :group 'mode-line-faces
   :group 'basic-faces)
@@ -101,20 +101,35 @@
 (require 'diminish)
 (diminish 'abbrev-mode "Abv")
 (diminish 'eldoc-mode)
+(diminish 'smartparens-mode)
+(diminish 'robe-mode)
+(diminish 'rufo-minor-mode)
 (diminish 'projectile-rails-mode)
+(diminish 'rubocop-mode "rbo")
 
 ;; --- modeline :  end  ---
 (global-hl-line-mode t)
 
-(show-paren-mode t)
+(use-package smartparens-config
+  :ensure smartparens
+  :config
+  (progn
+    ;;(show-paren-mode t)
+    (show-smartparens-global-mode t)))
+(add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+(add-hook 'markdown-mode-hook 'turn-on-smartparens-strict-mode)
 (electric-pair-mode t)
 (setq electric-pair-pairs '(
- 			    (?\' . ?\')
- 			    ))
+			    (?\' . ?\')
+			    ))
 (setq-default indent-tabs-mode nil)
 
-;;çª—å£å¿«é€Ÿåˆ‡æ¢è¿‡å»/å›æ¥
+
+;;’ãÙ’¸ı’²÷’Â®’ÀÚ‘»»‘¹ı’µî/’²ó’Íè
 (winner-mode t)
+
+;;
+(add-hook 'prog-mode-hook #'hs-minor-mode)
 
 ;;
 (use-package multiple-cursors
@@ -125,26 +140,27 @@
          ))
 
 ;;(global-linum-mode 1)
-;;å¯ä»¥ç¦æ­¢è‡ªåŠ¨ç”Ÿæˆå¤‡ä»½æ–‡ä»¶
+;;’²Ä’°Ê’¶Ø’»ß’¼«‘¶¯’À¸’À®‘±¸”°Ï’Ê¸’·ï
 (setq make-backup-files nil)
-;;å…³é—­è‡ªå·±ç”Ÿäº§çš„ä¿å­˜æ–‡ä»¶
+;;‘¹Ø‘±Õ’¼«’¸Ê’À¸‘²ú’Åª’Êİ’Â¸’Ê¸’·ï
 (setq auto-save-default nil)
-;;è‡ªåŠ¨åŠ è½½å¤–éƒ¨ä¿®æ”¹è¿‡çš„æ–‡ä»¶ã€‚
+;;’¼«‘¶¯’²Ã‘ÔØ’³°’Éô’½¤’²ş‘¹ı’Åª’Ê¸’·ï’¡£
 (global-auto-revert-mode t)
-;;è®¾ç½®ä¸ºå¼€å¯é»˜è®¤å…¨å±
+;;‘Éè’ÃÖ‘Îª‘¿ª”´ë’àÔ‘ÈÏ’Á´’Ö¢
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
-;;å…³é—­ Emacs ä¸­çš„è­¦å‘ŠéŸ³
+;;‘¹Ø‘±Õ Emacs ’Ãæ’Åª’·Ù’¹ğ’²»
 (setq ring-bell-function 'ignore)
-;; æ›´æ”¹å…‰æ ‡çš„æ ·å¼ï¼ˆä¸èƒ½ç”Ÿæ•ˆï¼Œè§£å†³æ–¹æ¡ˆè§ç¬¬äºŒé›†ï¼‰
+;; ’¹¹’²ş’¸÷‘±ê’Åª‘Ñù’¼°’¡Ê’ÉÔ’Ç½’À¸’ÚÃ’¡¤’²ò’ÑÓ’Êı’°Æ‘¼û’Âè’Æó’½¸’¡Ë
 (setq cursor-type 'bar)
-;; å…³é—­å¯åŠ¨å¸®åŠ©ç”»é¢
+;; ‘¹Ø‘±Õ”´ë‘¶¯”¼­’½õ’²è’ÌÌ
 (setq inhibit-splash-screen 1)
-;; æ›´æ”¹æ˜¾ç¤ºå­—ä½“å¤§å° 16pt
+;; ’¹¹’²ş‘ÏÔ’¼¨’»ú’ÂÎ’Âç’¾® 16pt
 (set-face-attribute 'default nil :height 160)
 
-;;(require 'window-numbering)
-;;(window-numbering-mode t)
-;; --- undo-tree ---
+;;’²Ã’Æş’ºÇ’¶á’ÂÇ‘¿ª‘¹ı’Ê¸’·ï’Åª‘Ñ¡‘Ïî‘ÈÃ’²æ‘ÃÇ’¹¹’²÷’¾¹’Åª’ºß‘Í¼’·Á’³¦’ÌÌ’Åª’ºÚ‘µ¥’Ãæ’ÂÇ‘¿ª’ºÇ’¶á ‘±à‘¼­‘¹ı’Åª’Ê¸’·ï’¡£
+(require 'window-numbering)
+(window-numbering-mode t)
+;;(require 'undo-tree)
 (use-package undo-tree
   :ensure t
   :diminish (undo-tree-mode . "udo")
@@ -159,15 +175,15 @@
   (ivy-mode 1)
   (setq ivy-use-virutal-buffers t)
   (setq enable-recursive-minibuffers t)
-;;å°ç¼“å†²åŒºé«˜åº¦
-  (setq ivy-height 30)
-;;è®¾å®šåˆå§‹listä¸ºç©º
+;;’¾®‘»º’ÑÕ’¶è’¹â’ÅÙ
+  (setq ivy-height 15)
+;;‘Éè’Äê’½é’»Ïlist‘Îª’¶õ
   (setq ivy-initial-inputs-alist nil)
-;;å¦‚ä½•é¡¯ç¤ºç¸½å…±ç¬¦åˆçš„æ•¸ç›®ä»¥åŠç›®å‰çš„ä½ç½®
+;;’Ç¡’²¿’ğı’¼¨’åÁ’¶¦’Éä’¹ç’Åª’ÚË’ÌÜ’°Ê’µÚ’ÌÜ’Á°’Åª’°Ì’ÃÖ
   (setq ivy-count-format "%d/%d")
   (setq ivy-re-builders-alist
-	;;ç•¶ç”¨ regex å¯ä»¥ä¸ç®¡æ¬¡åº
-        '((t . ivy--regex-ignore-order)))
+	;;’áÄ’ÍÑ regex ’²Ä’°Ê’ÉÔ’´É’¼¡’½ø
+        `((t . ivy--regex-ignore-order)))
   )
 
 (use-package counsel
@@ -180,68 +196,68 @@
   :ensure t
   :bind (("C-s" . swiper))
   )
-
+;;(global-unset-key (kbd "C-r"))
 (use-package projectile
   :ensure t
   :diminish (projectile-mode . "pjf")
-  :bind-keymap("C-l" . projectile-command-map)
+  :bind-keymap("C-r" . projectile-command-map)
   :config
   (projectile-mode t)
   (setq project-completion-system 'ivy)
   (use-package counsel-projectile
     :ensure t
-    :bind ("C-l C-b" . counsel-projectile)
     :config
     (counsel-projectile-mode t)
     )
   )
 
-(define-prefix-command 'ctl-j-map)
-(global-set-key (kbd "C-j") 'ctl-j-map)
-(use-package ace-jump-mode
-  :ensure t
-  :commands(ace-jump-mode ace-jump-word-mode ace-jump-line-mode ace-jump-char-mode)
-  :init
-  :bind
-  (("C-j C-j" . ace-jump-mode)
-   ("C-j C-w" . ace-jump-word-mode)
-   ("C-j C-l" . ace-jump-line-mode)
-   ("C-j C-t" . ace-jump-char-mode)))
+(define-prefix-command 'ctl-l-map)
+(global-set-key (kbd "C-l") 'ctl-l-map)
 
-;; --- hs-minor-mode ---
-(add-hook 'prog-mode-hook #'hs-minor-mode)
-(global-set-key (kbd "C-j h") 'hs-toggle-hiding)
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
+;;(define-prefix-command 'ctl-xi-map)
+;;(global-set-key (kbd "C-x i") 'ctl-xi-map)
 
+(global-set-key (kbd "C-l C-k") 'sp-end-of-sexp)
+(global-set-key (kbd "C-l C-j") 'sp-beginning-of-sexp)
+(global-set-key (kbd "C-l C-u") 'sp-up-sexp)
+(global-set-key (kbd "C-l C-d") 'sp-down-sexp)
+(global-set-key (kbd "C-l C-p") 'sp-previous-sexp)
+(global-set-key (kbd "C-l C-f") 'sp-next-sexp)
+(global-set-key (kbd "C-l C-n") 'sp-forward-sexp)
+(global-set-key (kbd "C-l C-b") 'sp-backward-sexp)
+
+(global-set-key (kbd "C-h C-j") 'ace-jump-mode)
+(global-set-key (kbd "C-h C-l") 'ace-jump-line-mode)
+(global-set-key (kbd "C-h C-t") 'ace-jump-char-mode)
 (global-set-key (kbd "C-h C-m") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-h h") 'help-for-help)
 (global-set-key (kbd "C-h C-h") 'counsel-M-x)
 (global-set-key (kbd "C-h C-u") 'undo-tree-visualize)
-(global-set-key (kbd "C-h h") 'help-for-help)
 
 (global-unset-key (kbd "C-h w"))
 (global-set-key (kbd "C-h w f") 'toggle-frame-fullscreen)
 
-(global-unset-key (kbd "C-r"))
-(global-set-key (kbd "C-r") 'backward-delete-char-untabify)
+(global-unset-key (kbd "C-j"))
+(global-set-key (kbd "C-j") 'backward-delete-char-untabify)
 
 (global-set-key (kbd "<f2>") 'open-init-file)
 (global-unset-key (kbd "C-x i"))
 (global-set-key "\C-xid" 'insert-current-date)
 (global-set-key "\C-xit" 'insert-current-datetime)
 
-(global-set-key (kbd "C-q") (kbd "C-x 1"))
-(global-set-key (kbd "C-j C-b") 'ivy-switch-buffer)
-
 ;; ---------- test ---------------------
 
 ;;-------------------------------------- emacs : end -----------------------------------
 
 ;;-------------------------------------- abbrev-config : start -----------------------------------
-(setq-default abbrev-mode t)
-(read-abbrev-file "~/.emacs.d/abbrev_defs")
-(setq save-abbrevs t)
+;;(add-hook 'markdown-mode-hook (lambda()
+;;				(
+;;                                 (setq-default abbrev-mode t)
+;;				 (read-abbrev-file "~/.emacs.d/abbrev_defs")
+;;				 (setq save-abbrevs t)
+;;				 )
+;;				)
+;;	  )
 ;;-------------------------------------- abbrev-config : end -----------------------------------
 
 ;;-------------------------------------- markdown-mode : start -----------------------------------
@@ -263,9 +279,9 @@
   )
 ;;-------------------------------------- neotree : end -----------------------------------
 
-;;--------------------- è‡ªåˆ†ã§defined functions : start -----------------------------------
+;;--------------------- ’¼«’Ê¬’¤Çdefined functions : start -----------------------------------
 (require 'funcs-cfg)
-;;--------------------- è‡ªåˆ†ã§defined functions : end -----------------------------------
+;;--------------------- ’¼«’Ê¬’¤Çdefined functions : end -----------------------------------
 
 ;;--------------------- abbrev-config : start -----------------------------------
 (require 'org-mode-cfg)
@@ -313,54 +329,11 @@
 ;; -------------------- yasnippet :  end  --------------------
 
 ;; -------------------- flycheck : start  --------------------
-;; (use-package flycheck
-;;   :ensure t
-;;   :init
-;;   (global-flycheck-mode t))
-;; -------------------- flycheck :  end  --------------------
-
-;; -------------------- web-mode : start  --------------------
-(use-package web-mode
+(use-package flycheck
   :ensure t
   :init
-   ;; .js, .jsx ã‚’ web-mode ã§é–‹ã
-  (add-to-list 'auto-mode-alist '("\\.js[x]?$" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tsx$" . web-mode))
-  ;; æ‹¡å¼µå­ .js ã§ã‚‚JSXç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã«
-  (setq web-mode-content-types-alist
-        '(("jsx" . "\\.js[x]?\\'")))
-  :config
-  ;; ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆ
-  (add-hook 'web-mode-hook
-          '(lambda ()
-             (setq web-mode-attr-indent-offset nil)
-             (setq web-mode-markup-indent-offset 2)
-             (setq web-mode-css-indent-offset 2)
-             (setq web-mode-code-indent-offset 2)
-             (setq web-mode-sql-indent-offset 2)
-             (setq indent-tabs-mode nil)
-             (setq tab-width 2)
-             ))
-  ;; è‰²
-  ;; (custom-set-faces
-  ;;  '(web-mode-doctype-face           ((t (:foreground "#4A8ACA"))))
-  ;;  '(web-mode-html-tag-face          ((t (:foreground "#4A8ACA"))))
-  ;;  '(web-mode-html-tag-bracket-face  ((t (:foreground "#4A8ACA"))))
-  ;;  '(web-mode-html-attr-name-face    ((t (:foreground "#87CEEB"))))
-  ;;  '(web-mode-html-attr-equal-face   ((t (:foreground "#FFFFFF"))))
-  ;;  '(web-mode-html-attr-value-face   ((t (:foreground "#D78181"))))
-  ;;  '(web-mode-comment-face           ((t (:foreground "#587F35"))))
-  ;;  '(web-mode-server-comment-face    ((t (:foreground "#587F35"))))
-   
-  ;;  '(web-mode-css-at-rule-face       ((t (:foreground "#DFCF44"))))
-  ;;  '(web-mode-comment-face           ((t (:foreground "#587F35"))))
-  ;;  '(web-mode-css-selector-face      ((t (:foreground "#DFCF44"))))
-  ;;  '(web-mode-css-pseudo-class       ((t (:foreground "#DFCF44"))))
-  ;;  '(web-mode-css-property-name-face ((t (:foreground "#87CEEB"))))
-  ;;  '(web-mode-css-string-face        ((t (:foreground "#D78181"))))
-  ;;  )
-  )
-;; -------------------- web-mode :  end  --------------------
+  (global-flycheck-mode t))
+;; -------------------- flycheck :  end  --------------------
 
 ;; -------------------- ruby-config :  end  --------------------
 (load "~/.emacs.d/lisp/ruby.el")
@@ -379,7 +352,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (hs-minor hs-minor-mode web-mode abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
+    (abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

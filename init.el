@@ -154,7 +154,7 @@
 
 (use-package ivy
   :ensure t
-  :diminish (ivy-mode . "")
+  :diminish (ivy-mode . "ivy")
   :config
   (ivy-mode 1)
   (setq ivy-use-virutal-buffers t)
@@ -181,6 +181,14 @@
   :bind (("C-s" . swiper))
   )
 
+(global-unset-key (kbd "C-j"))
+(define-prefix-command 'ctl-j-map)
+(global-set-key (kbd "C-j") 'ctl-j-map)
+(global-set-key (kbd "C-j C-j") 'ace-jump-mode)
+(global-set-key (kbd "C-j C-w") 'ace-jump-word-mode)
+(global-set-key (kbd "C-j C-l") 'ace-jump-line-mode)
+(global-set-key (kbd "C-j C-c") 'ace-jump-char-mode)
+
 (use-package projectile
   :ensure t
   :diminish (projectile-mode . "pjf")
@@ -190,30 +198,14 @@
   (setq project-completion-system 'ivy)
   (use-package counsel-projectile
     :ensure t
-    :bind ("C-l C-b" . counsel-projectile)
     :config
     (counsel-projectile-mode t)
     )
   )
 
-(define-prefix-command 'ctl-j-map)
-(global-set-key (kbd "C-j") 'ctl-j-map)
-(use-package ace-jump-mode
-  :ensure t
-  :commands(ace-jump-mode ace-jump-word-mode ace-jump-line-mode ace-jump-char-mode)
-  :init
-  :bind
-  (("C-j C-j" . ace-jump-mode)
-   ("C-j C-w" . ace-jump-word-mode)
-   ("C-j C-l" . ace-jump-line-mode)
-   ("C-j C-t" . ace-jump-char-mode)))
-
 ;; --- hs-minor-mode ---
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-(global-set-key (kbd "C-j h") 'hs-toggle-hiding)
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
-;;(global-set-key (kbd "C-j h h" 'hs-hide-block))
+(global-set-key (kbd "C-j C-h") 'hs-toggle-hiding)
 
 (global-set-key (kbd "C-h C-m") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-h C-h") 'counsel-M-x)
@@ -232,7 +224,10 @@
 (global-set-key "\C-xit" 'insert-current-datetime)
 
 (global-set-key (kbd "C-q") (kbd "C-x 1"))
+;;(global-set-key (kbd "C-j C-f") (kbd "C-x b"))
 (global-set-key (kbd "C-j C-b") 'ivy-switch-buffer)
+;;(global-set-key (kbd "C-j C-f") (kbd "C-x C-f"))f
+(global-set-key (kbd "C-j C-f") 'counsel-find-file)
 
 ;; ---------- test ---------------------
 
@@ -363,7 +358,7 @@
 ;; -------------------- web-mode :  end  --------------------
 
 ;; -------------------- ruby-config :  end  --------------------
-(load "~/.emacs.d/lisp/ruby.el")
+;;(load "~/.emacs.d/lisp/ruby.el")
 ;; -------------------- ruby-config :  end  --------------------
 
 ;;-------------------------------------- theme-config : start -----------------------------------

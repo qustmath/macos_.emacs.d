@@ -184,6 +184,10 @@
 (global-unset-key (kbd "C-j"))
 (define-prefix-command 'ctl-j-map)
 (global-set-key (kbd "C-j") 'ctl-j-map)
+;;(local-set-key (kbd "C-j C-b") 'ivy-switch-buffer)
+(define-key key-translation-map (kbd "C-j C-b") (kbd "C-x b"))
+
+
 (global-set-key (kbd "C-j C-j") 'ace-jump-mode)
 (global-set-key (kbd "C-j C-w") 'ace-jump-word-mode)
 (global-set-key (kbd "C-j C-l") 'ace-jump-line-mode)
@@ -205,6 +209,7 @@
 
 ;; --- hs-minor-mode ---
 (add-hook 'prog-mode-hook #'hs-minor-mode)
+
 (global-set-key (kbd "C-j C-h") 'hs-toggle-hiding)
 
 (global-set-key (kbd "C-h C-m") 'comment-or-uncomment-region)
@@ -224,9 +229,6 @@
 (global-set-key "\C-xit" 'insert-current-datetime)
 
 (global-set-key (kbd "C-q") (kbd "C-x 1"))
-;;(global-set-key (kbd "C-j C-f") (kbd "C-x b"))
-(global-set-key (kbd "C-j C-b") 'ivy-switch-buffer)
-;;(global-set-key (kbd "C-j C-f") (kbd "C-x C-f"))f
 (global-set-key (kbd "C-j C-f") 'counsel-find-file)
 
 ;; ---------- test ---------------------

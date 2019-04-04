@@ -1,6 +1,8 @@
 ;;-*-coding: utf-8;-*-
 (define-abbrev-table 'Buffer-menu-mode-abbrev-table '())
 
+(define-abbrev-table 'Custom-mode-abbrev-table '())
+
 (define-abbrev-table 'Info-edit-mode-abbrev-table '())
 
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
@@ -38,7 +40,7 @@
 (define-abbrev-table 'global-abbrev-table
   '(
     ("CZX" "陳振興" nil 0)
-    ("czx" "チン　シンコウ@" nil 2)
+    ("czx" "チン　シンコウ@" nil 4)
    ))
 
 (define-abbrev-table 'gnus-group-mode-abbrev-table '())
@@ -70,6 +72,23 @@
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
 (define-abbrev-table 'occur-mode-abbrev-table '())
+
+(define-abbrev-table 'org-export-stack-mode-abbrev-table '())
+
+(define-abbrev-table 'org-journal-mode-abbrev-table
+  '(
+    ("eauthor" "#+AUTHOR:      " nil 0)
+    ("ebind" "#+BIND:        " nil 0)
+    ("edate" "#+DATE:        " nil 0)
+    ("edescription" "#+DESCRIPTION: " nil 0)
+    ("eemail" "#+EMAIL:       " nil 0)
+    ("ekeywords" "#+KEYWORDS:    " nil 1)
+    ("elanguage" "#+LANGUAGE:    " nil 0)
+    ("elinkhome" "#+LINK_HOME:   " nil 0)
+    ("elinkup" "#+LINK_UP:     " nil 0)
+    ("etext" "#+TEXT:        " nil 0)
+    ("etitle" "#+TITLE:       " nil 4)
+   ))
 
 (define-abbrev-table 'org-mode-abbrev-table '())
 

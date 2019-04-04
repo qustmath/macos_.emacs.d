@@ -368,6 +368,39 @@
 ;;(load-theme 'zenburn t)
 ;;-------------------------------------- theme-config : end -----------------------------------
 
+;; --- org-journal ---
+(use-package org-journal
+  :ensure t
+  :bind (("C-c t" . journal-file-today)
+         ("C-c y" . journal-file-yesterday))
+  :custom
+  (org-journal-dir "~/Documents/.journal/2019/")
+  (org-journal-file-format "%Y%m%d.org")
+  (org-journal-date-format "%e %b %Y (%A)")
+  (org-journal-time-format "")
+  :preface
+  (defun get-journal-file-today ()
+    "Gets filename for today's journal entry."
+    (let ((daily-name (format-time-string "%Y%m%d.org")))
+      (expand-file-name (concat org-journal-dir daily-name))))
+  
+  (defun journal-file-today ()
+    "Creates and load a journal file based on today's date."
+    (interactive)
+    (find-file (get-journal-file-today)))
+  
+  (defun get-journal-file-yesterday ()
+    "Gets filename for yesterday's journal entry."
+    (let* ((yesterday (time-subtract (current-time) (days-to-time 1)))
+           (daily-name (format-time-string "%Y%m%d.org" yesterday)))
+      (expand-file-name (concat org-journal-dir daily-name))))
+  
+  (defun journal-file-yesterday ()
+    "Creates and load a file based on yesterday's date."
+    (interactive)
+    (find-file (get-journal-file-yesterday))))
+  
+;; -------------------
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -376,7 +409,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (hs-minor hs-minor-mode web-mode abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
+    (org-journal hs-minor hs-minor-mode web-mode abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

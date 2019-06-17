@@ -34,6 +34,10 @@
 ;; --- modeline : start ---
 (column-number-mode t)
 (line-number-mode t)
+(add-hook 'prog-mode-hook (lambda()(global-linum-mode 1)))
+(add-hook 'org-mode-hook (lambda()(global-linum-mode nil)))
+(add-hook 'markdown-mode-hook (lambda()(global-linum-mode nil)))
+
 ;;Faces
 (set-face-attribute 'mode-line           nil :background "light blue")
 ;;(set-face-attribute 'mode-line-buffer-id nil :background "blue" :foreground "white")
@@ -124,7 +128,6 @@
          ("C-h C-p" . mc/mark-previous-like-this)
          ))
 
-;;(global-linum-mode 1)
 ;;可以禁止自动生成备份文件
 (setq make-backup-files nil)
 ;;关闭自己生产的保存文件
@@ -186,6 +189,12 @@
 (global-set-key (kbd "C-j") 'ctl-j-map)
 ;;(local-set-key (kbd "C-j C-b") 'ivy-switch-buffer)
 (define-key key-translation-map (kbd "C-j C-b") (kbd "C-x b"))
+
+(add-hook 'org-mode-hook
+          (lambda () (
+                      (local-set-key (kbd "C-0") #'run-latexmk)
+                      
+                      )))
 
 
 (global-set-key (kbd "C-j C-j") 'ace-jump-mode)
@@ -374,7 +383,7 @@
   :bind (("C-c t" . journal-file-today)
          ("C-c y" . journal-file-yesterday))
   :custom
-  (org-journal-dir "~/Documents/.journal/2019/")
+  (org-journal-dir "~/Documents/shinko/.journal/2019/")
   (org-journal-file-format "%Y%m%d.org")
   (org-journal-date-format "%e %b %Y (%A)")
   (org-journal-time-format "")
@@ -399,6 +408,8 @@
     "Creates and load a file based on yesterday's date."
     (interactive)
     (find-file (get-journal-file-yesterday))))
+
+(add-hook 'markdown-mode-hook (lambda()(global-linum-mode nil)))
   
 ;; -------------------
 
@@ -409,7 +420,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-journal hs-minor hs-minor-mode web-mode abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
+    (yaml-mode coffee-mode org-journal hs-minor hs-minor-mode web-mode abbrev multiple-cursors auto-package-update diminish projectile-rails projectile-railse rufo rubocop ruby-electric robe rvm inf-ruby flycheck yasnippet-snippets yasnippet company swiper counsel smartparens window-numbering neotree))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

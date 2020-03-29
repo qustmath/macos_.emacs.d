@@ -21,7 +21,7 @@
 ;; cl - Common Lisp Extension
 (require 'cl)
 ;; Find Executable Path on OS X
-(when (memq window-system '(mac ns))
+(when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 ;;change meta from option to command
 (setq mac-command-modifier 'meta
@@ -250,13 +250,6 @@
 (read-abbrev-file "~/.emacs.d/abbrev_defs")
 (setq save-abbrevs t)
 ;;-------------------------------------- abbrev-config : end -----------------------------------
-
-;;-------------------------------------- magit : start -----------------------------------
-(use-package magit
-  :ensure t
-  :bind ("C-x g" . magit-status)
-  )
-;;-------------------------------------- magit : end -----------------------------------
 
 ;;-------------------------------------- markdown-mode : start -----------------------------------
 (use-package markdown-mode

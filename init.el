@@ -24,13 +24,14 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 ;;change meta from option to command
-(setq mac-command-modifier 'meta
-      mac-option-modifier 'none)
+;;(setq mac-command-modifier 'meta
+;;      mac-option-modifier 'none)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
 ;;--------------------------------------init-emacs : start -----------------------------------
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 ;; --- modeline : start ---
 (column-number-mode t)
@@ -38,6 +39,25 @@
 (add-hook 'prog-mode-hook (lambda()(global-linum-mode 1)))
 (add-hook 'org-mode-hook (lambda()(global-linum-mode nil)))
 (add-hook 'markdown-mode-hook (lambda()(global-linum-mode nil)))
+;; 标题栏显示缓冲区名
+;;(setq frame-title-format "%b")
+
+;;  Emacs title bar to reflect file name -----------------------------------------------
+(defun frame-title-string ()
+   "Return the file name of current buffer, using ~ if under home directory"
+   (let
+      ((fname (or
+                 (buffer-file-name (current-buffer))
+                 (buffer-name))))
+      ;;let body
+      (when (string-match (getenv "HOME") fname)
+        (setq fname (replace-match "~" t t fname))        )
+      fname))
+;; Title = 'system-name foo.bar'
+;;(setq frame-title-format '("<<" "%b" ">>" system-name "  "(:eval (frame-title-string))))
+;;; Title = 'system-name File: foo.bar'
+(setq frame-title-format '("" system-name "  "(:eval (frame-title-string))))
+;; ------------------------------------------------------------------------------------
 
 ;;Faces
 (set-face-attribute 'mode-line           nil :background "light blue")
@@ -153,7 +173,7 @@
   :ensure t
   :diminish (undo-tree-mode . "udo")
   :config
-  (undo-tree-mode t)
+  (global-undo-tree-mode t)
   )
 
 (use-package ivy
